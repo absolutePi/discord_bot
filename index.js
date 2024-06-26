@@ -6,7 +6,7 @@ const fs = require('fs');
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
-// Read forbidden strings from text.txt
+// Read strings from text.txt
 let forbiddenStrings = [];
 const readForbiddenStrings = () => {
   fs.readFile('text.txt', 'utf8', (err, data) => {
@@ -29,7 +29,7 @@ client.on('messageCreate', message => {
   const found = forbiddenStrings.find(str => message.content.includes(str));
 
   if (found) {
-    // Remove the string from forbiddenStrings and update text.txt
+    // Remove the string and update text.txt
     forbiddenStrings = forbiddenStrings.filter(str => str !== found);
     fs.writeFile('text.txt', forbiddenStrings.join('\n'), (err) => {
       if (err) {
